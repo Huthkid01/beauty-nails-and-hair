@@ -30,30 +30,35 @@ document.addEventListener("DOMContentLoaded", () => {
     "Braids": 7000
   };
 
-  let selectedService = "";
+  let selectedServices = [];
 
   // ----------------- SERVICE SELECTION -----------------
   serviceCards.forEach(card => {
     card.addEventListener('click', () => {
-      selectedService = card.dataset.service;
-      serviceInput.value = selectedService;
+      let selectedService = card.dataset.service;
+      
+      serviceInput.value += selectedService + ', ';
 
       // Highlight active card
-      serviceCards.forEach(c => c.classList.remove('active'));
+      // serviceCards.forEach(c => c.classList.remove('active'));
       card.classList.add('active');
 
       // Update total amount
-      totalAmountEl.textContent = prices[selectedService].toLocaleString();
+      let totalAmount = parseInt(totalAmountEl.textContent);
+      totalAmountEl.textContent = totalAmount + parseInt(prices[selectedService]);
+      selectedServices.push(selectedService);
     });
   });
 
+  
+
   // ----------------- SHOW/CLOSE MODAL -----------------
   showBankBtn.addEventListener('click', () => {
-    if (!selectedService) {
+    if (selectedServices.length == 0) {
       alert("Please select a service first.");
       return;
     }
-    amountLabel.textContent = "₦" + prices[selectedService].toLocaleString();
+    amountLabel.textContent = "₦" + totalAmountEl.textContent;
     bankModal.style.display = "flex";
     bankModal.setAttribute('aria-hidden','false');
   });
@@ -66,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------- CONFIRM PAYMENT -----------------
   iPaidBtn.addEventListener('click', async () => {
     // Validate form
-    if (!selectedService || !dateInput.value || !timeInput.value || !nameInput.value || !emailInput.value || !phoneInput.value) {
+    if (selectedServices.length == 0 || !dateInput.value || !timeInput.value || !nameInput.value || !emailInput.value || !phoneInput.value) {
       alert("Please complete all fields first.");
       return;
     }
@@ -77,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
         phone: phoneInput.value.trim(),
-        service: selectedService,
+        service: selectedServices.join(', '),
         date: dateInput.value,
         time: timeInput.value,
         payment_status: "user_claimed_transfer"
@@ -87,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Redirect to WhatsApp for owner confirmation
       const ownerNumber = "2349151594935"; // Replace with your WhatsApp number
-      const msg = `Hello, I booked ${selectedService} on ${dateInput.value} at ${timeInput.value}. Name: ${nameInput.value}, Phone: ${phoneInput.value}. I have made the transfer.`;
+      const msg = `Hello, I booked ${selectedServices.join(', ')} on ${dateInput.value} at ${timeInput.value}. Name: ${nameInput.value}, Phone: ${phoneInput.value}. I have made the transfer.`;
       window.location.href = `https://wa.me/${ownerNumber}?text=${encodeURIComponent(msg)}`;
 
       // Close modal and reset form
@@ -99,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nameInput.value = "";
       emailInput.value = "";
       phoneInput.value = "";
-      selectedService = "";
+      selectedServices = "";
       serviceCards.forEach(c => c.classList.remove('active'));
       totalAmountEl.textContent = "0";
 
