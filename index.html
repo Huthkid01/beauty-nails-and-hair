@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beauty Nails & Hair - Book Appointment</title>
+<link rel="stylesheet" href="style.css">
+<!-- Load Supabase JS first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <h1>Beauty Nails & Hair</h1>
+    <p>Book your nails & hair appointment online. Fast — Secure — Simple.</p>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Services Section -->
+  <section id="services">
+    <h2>Services</h2>
+    <div class="cards">
+      <button class="service-card" data-service="Manicure" data-price="5000">Manicure - ₦5,000</button>
+      <button class="service-card" data-service="Pedicure" data-price="6000">Pedicure - ₦6,000</button>
+      <button class="service-card" data-service="Hair Styling" data-price="8000">Hair Styling - ₦8,000</button>
+      <button class="service-card" data-service="Braids" data-price="7000">Braids - ₦7,000</button>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking">
+    <h2>Book an Appointment</h2>
+    <form id="bookingForm">
+      <label>Selected Service
+        <input type="text" id="serviceInput" name="service" readonly required>
+      </label>
+      <p>Total: ₦<span id="totalAmount">0</span></p>
+
+      <label>Date <input type="date" id="dateInput" required></label>
+      <label>Time <input type="time" id="timeInput" required></label>
+      <label>Name <input type="text" id="nameInput" placeholder="Full Name" required></label>
+      <label>Email <input type="email" id="emailInput" placeholder="email@example.com" required></label>
+      <label>Phone <input type="tel" id="phoneInput" placeholder="+2348012345678" required></label>
+
+      <div class="actions">
+        <button type="button" id="showBankBtn">Show Bank Details</button>
+      </div>
+    </form>
+    <div id="message" aria-live="polite"></div>
+  </section>
+</main>
+
+<!-- Bank Modal -->
+<div id="bankModal" class="modal" aria-hidden="true">
+  <div class="modal-content">
+    <button class="close" id="closeModal">×</button>
+    <h3>Bank Transfer Details</h3>
+    <p>Bank: <strong>GTBank</strong></p>
+    <p>Account Number: <strong id="accountNumber">1234567890</strong></p>
+    <p>Account Name: <strong>Beauty Nails & Hair</strong></p>
+    <p>Amount: <strong id="amountLabel">0</strong></p>
+    <button id="iPaidBtn">I Have Made Payment</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="container footer">
+  <p>©️ <span id="year"></span> Beauty Nails & Hair</p>
+</footer>
+
+<!-- Custom Script -->
+<script src="script.js"></script>
+</body>
+</html>

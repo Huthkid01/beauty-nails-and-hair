@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard - Beauty Nails & Hair</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="container">
+  <h2>Admin Dashboard</h2>
+  <button id="logoutBtn">Logout</button>
+  <p>Total Bookings: <span id="adminTotal">0</span></p>
+
+  <table id="adminTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Payment Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+
+<!-- Load Supabase JS first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+
+<!-- Admin JS -->
+<script src="admin.js"></script>
+</body>
+</html>
