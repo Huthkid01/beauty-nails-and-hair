@@ -21,8 +21,8 @@ button:hover{background:#8b3dd1;transform:scale(1.05);}
 <main>
 <h2>Admin Login</h2>
 <form id="loginForm">
-<label>Email<input type="email" id="adminEmail" placeholder="admin@example.com" required></label>
-<label>Password<input type="password" id="adminPassword" placeholder="Password" required></label>
+<label>Email<input type="email" id="adminEmail" placeholder="Enter your email" required></label>
+<label>Password<input type="password" id="adminPassword" placeholder="Enter your password" required></label>
 <button type="submit">Login</button>
 <div id="loginMessage"></div>
 </form>
@@ -30,10 +30,10 @@ button:hover{background:#8b3dd1;transform:scale(1.05);}
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const SUPABASE_URL = "https://hfbyqpbnyopxrwbuvdmn.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmYnlxcGJueW9weHJ3YnV2ZG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzNzUyOTEsImV4cCI6MjA3ODk1MTI5MX0.A0svx0bIVrW4GHKDB8QSUjETZxRjZ9bRs7hAWYvmFvI";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  document.addEventListener("DOMContentLoaded" , () => {
+    const SUPABASE_URL = "https://hfbyqpbnyopxrwbuvdmn.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmYnlxcGJueW9weHJ3YnV2ZG1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzNzUyOTEsImV4cCI6MjA3ODk1MTI5MX0.A0svx0bIVrW4GHKDB8QSUjETZxRjZ9bRs7hAWYvmFvI";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const loginForm = document.getElementById("loginForm");
 const loginMessage = document.getElementById("loginMessage");
@@ -42,7 +42,6 @@ loginForm.addEventListener("submit", async e=>{
   e.preventDefault();
   const email=document.getElementById("adminEmail").value.trim();
   console.log(email);
-  
   const password=document.getElementById("adminPassword").value.trim();
   const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
   if(error){ loginMessage.textContent=error.message; return; }

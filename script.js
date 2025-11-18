@@ -25,40 +25,54 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------- SERVICE PRICES -----------------
   const prices = {
     "Manicure": 5000,
-    "Pedicure": 6000,
-    "Hair Styling": 8000,
-    "Braids": 7000
+    "Pedicure": 8000,
+    "Hair Styling": 15000,
+    "Braids": 25000
   };
 
   let selectedServices = [];
 
-  // ----------------- SERVICE SELECTION -----------------
-  serviceCards.forEach(card => {
-    card.addEventListener('click', () => {
-      let selectedService = card.dataset.service;
-      
-      serviceInput.value += selectedService + ', ';
+  // ----------------- SERVICE SELECTION (TOGGLE) -----------------
+serviceCards.forEach(card => {
+  card.addEventListener('click', () => {
+    let selectedService = card.dataset.service;
+    let price = prices[selectedService];
 
-      // Highlight active card
-      // serviceCards.forEach(c => c.classList.remove('active'));
+    // If already selected → remove it
+    if (selectedServices.includes(selectedService)) {
+      
+      // Remove from array
+      selectedServices = selectedServices.filter(s => s !== selectedService);
+
+      // Remove active class
+      card.classList.remove('active');
+
+      // Subtract price
+      let totalAmount = parseInt(totalAmountEl.textContent);
+      totalAmountEl.textContent = totalAmount - price;
+
+    } else {
+      // Add new selection
+      selectedServices.push(selectedService);
       card.classList.add('active');
 
-      // Update total amount
+      // Add price
       let totalAmount = parseInt(totalAmountEl.textContent);
-      totalAmountEl.textContent = totalAmount + parseInt(prices[selectedService]);
-      selectedServices.push(selectedService);
-    });
-  });
+      totalAmountEl.textContent = totalAmount + price;
+    }
 
-  
+    // Update input field
+    serviceInput.value = selectedServices.join(', ');
+  });
+});
 
   // ----------------- SHOW/CLOSE MODAL -----------------
   showBankBtn.addEventListener('click', () => {
-    if (selectedServices.length == 0) {
+    if (selectedServices.length === 0) {
       alert("Please select a service first.");
       return;
     }
-    amountLabel.textContent = "₦" + totalAmountEl.textContent;
+    amountLabel.textContent = "₦" + parseInt(totalAmountEl.textContent).toLocaleString();
     bankModal.style.display = "flex";
     bankModal.setAttribute('aria-hidden','false');
   });
